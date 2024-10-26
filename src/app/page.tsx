@@ -1,11 +1,31 @@
 'use client';
-import 'regenerator-runtime/runtime';
+import 'regenerator-runtime/runtime';// for speech recognition
 import TextArea from "./components/input/TextArea.jsx";
 import React, {useState, ChangeEvent} from "react";
 import SpeechRecognitionComponent from "./components/speechrecognition/SpeechRecognition.jsx";
+import { IconFileUpload, IconVolume } from '@tabler/icons-react';
 export default function Home() {
 
   const [sourceText, setSourceText] = useState<string>('');
+
+  const handleAudioPlayback = (text:string) => {
+    const utterance = new SpeechSynthesisUtterance(text); // converts text to speech
+    window.speechSynthesis.speak(utterance); // speaks the text
+  }
+
+  const handleFileUpload = (event:ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsText(file);
+      reader.onload = () => {
+        if (reader.result) {
+          setSourceText(reader.result.toString());
+        }
+      };
+    }
+  }
+
   return (
     <div> 
       <div className="h-screen w-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center">
@@ -32,7 +52,9 @@ export default function Home() {
                       {/*icons and buttons*/}
                       <div className="flex flex-row justify-between w-full">
                         <span className="cursor-pointer flex space-x-2 flex-row">
-                          <SpeechRecognitionComponent setSourceText={setSourceText}/>
+                          <SpeechRecognitionComponent setSourceText={setSourceText}/> {/*speech recognition component*/}
+                          <IconVolume size={22} className="text-gray-400" onClick={() => handleAudioPlayback(sourceText)}/> {/*volume icon*/}
+                          <IconFileUpload size={22} className="text-gray-400" onClick={() => handleFileUpload}/> {/*upload icon*/}
                         </span>
                       </div>
                     </div>
