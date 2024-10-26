@@ -13,17 +13,8 @@ export default function Home() {
     window.speechSynthesis.speak(utterance); // speaks the text
   }
 
-  const handleFileUpload = (event:ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = () => {
-        if (reader.result) {
-          setSourceText(reader.result.toString());
-        }
-      };
-    }
+  const handleFileUpload = () => {
+    
   }
 
   return (
