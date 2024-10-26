@@ -1,6 +1,8 @@
 'use client';
+import 'regenerator-runtime/runtime';
 import TextArea from "./components/input/TextArea.jsx";
 import React, {useState, ChangeEvent} from "react";
+import SpeechRecognitionComponent from "./components/speechrecognition/SpeechRecognition.jsx";
 export default function Home() {
 
   const [sourceText, setSourceText] = useState<string>('');
@@ -30,9 +32,7 @@ export default function Home() {
                       {/*icons and buttons*/}
                       <div className="flex flex-row justify-between w-full">
                         <span className="cursor-pointer flex space-x-2 flex-row">
-                          <span className="text-neutral-400">
-                            
-                          </span>
+                          <SpeechRecognitionComponent setSourceText={setSourceText}/>
                         </span>
                       </div>
                     </div>
