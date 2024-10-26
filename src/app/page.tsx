@@ -1,6 +1,8 @@
 'use client';
 import 'regenerator-runtime/runtime';// for speech recognition
 import TextArea from "./components/input/TextArea.jsx";
+import FileUpload from "./components/input/FileUpload.jsx";
+import {rtfToText} from "./utils/rtfToText.js";
 import React, {useState, ChangeEvent} from "react";
 import SpeechRecognitionComponent from "./components/speechrecognition/SpeechRecognition.jsx";
 import { IconFileUpload, IconVolume } from '@tabler/icons-react';
@@ -13,9 +15,18 @@ export default function Home() {
     window.speechSynthesis.speak(utterance); // speaks the text
   }
 
-  const handleFileUpload = () => {
-    
-  }
+  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const rtfContent = reader.result as string;
+        const text = rtfToText(rtfContent); // converts RTF to plain text 
+        setSourceText(reader.result as string);
+      };
+      reader.readAsText(file);
+    }
+  };
 
   return (
     <div> 
@@ -45,7 +56,7 @@ export default function Home() {
                         <span className="cursor-pointer flex space-x-2 flex-row">
                           <SpeechRecognitionComponent setSourceText={setSourceText}/> {/*speech recognition component*/}
                           <IconVolume size={22} className="text-gray-400" onClick={() => handleAudioPlayback(sourceText)}/> {/*volume icon*/}
-                          <IconFileUpload size={22} className="text-gray-400" onClick={() => handleFileUpload}/> {/*upload icon*/}
+                          <FileUpload handleFileUpload={handleFileUpload}/> {/*upload icon*/}
                         </span>
                       </div>
                     </div>
