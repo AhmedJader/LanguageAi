@@ -26,6 +26,11 @@ export default function Home() {
                       {setSourceText(e.target.value)}}
                       placeholder="Enter Text To Translate"
                       />
+                      <div className="flex flex-row justify-between w-full">
+                        <span className="cursor-pointer flex space-x-2 flex-row">
+                          <span className="text-neutral-400"></span>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
