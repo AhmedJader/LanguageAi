@@ -19,6 +19,7 @@ export default function Home() {
                 <div className="mt-7 sm:mt-12 mx-auto max-w-3xl relative">
                   <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
                     <div className="relative z-10 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-900 border-neutral-700 shadow-gray-900/20">
+                      {/*component box holding text element, and icons/buttons */}
                       <TextArea 
                       id='source-language'
                       value={sourceText}
@@ -26,6 +27,7 @@ export default function Home() {
                       {setSourceText(e.target.value)}}
                       placeholder="Enter Text To Translate"
                       />
+                      {/*icons and buttons*/}
                       <div className="flex flex-row justify-between w-full">
                         <span className="cursor-pointer flex space-x-2 flex-row">
                           <span className="text-neutral-400"></span>
