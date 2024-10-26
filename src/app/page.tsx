@@ -30,7 +30,9 @@ export default function Home() {
                       {/*icons and buttons*/}
                       <div className="flex flex-row justify-between w-full">
                         <span className="cursor-pointer flex space-x-2 flex-row">
-                          <span className="text-neutral-400"></span>
+                          <span className="text-neutral-400">
+                            
+                          </span>
                         </span>
                       </div>
                     </div>
