@@ -4,7 +4,7 @@ import {
   IconBulb,
   IconSchool,
   IconWriting,
-  IconMoodSmile, 
+  IconMoodSmile,
   IconHeart,
 } from "@tabler/icons-react";
 
