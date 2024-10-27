@@ -2,6 +2,7 @@
 import 'regenerator-runtime/runtime';// for speech recognition
 import TextArea from "./components/input/TextArea.jsx";
 import FileUpload from "./components/input/FileUpload.jsx";
+import LinkPaste from "./components/input/LinkPaste.jsx";
 import {rtfToText} from "./utils/rtfToText.js";
 import React, {useState, ChangeEvent} from "react";
 import SpeechRecognitionComponent from "./components/speechrecognition/SpeechRecognition.jsx";
@@ -28,6 +29,17 @@ export default function Home() {
     }
   };
 
+  const handleLinkPaste = async (e: ChangeEvent<HTMLInputElement>) => {
+    const link = e.target.value;
+    try {
+      const response = await fetch(link);
+      const data = await response.text();
+      setSourceText(data);
+    } catch (error) {
+      console.error("Error fetching link content:", error);
+    }
+  };
+
   return (
     <div> 
       <div className="h-screen w-full dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center">
@@ -42,7 +54,7 @@ export default function Home() {
 
                 <div className="mt-7 sm:mt-12 mx-auto max-w-3xl relative">
                   <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
-                    <div className="relative z-10 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-900 border-neutral-700 shadow-gray-900/20">
+                    <div className="relative z-10 flex flex-col space-x-3 border rounded-lg shadow-2xl bg-neutral-900 border-neutral-600/40 shadow-gray-900/100">
                       {/*component box holding text element, and icons/buttons */}
                       <TextArea 
                       id='source-language'
@@ -57,6 +69,10 @@ export default function Home() {
                           <SpeechRecognitionComponent setSourceText={setSourceText}/> {/*speech recognition component*/}
                           <IconVolume size={22} className="text-gray-400" onClick={() => handleAudioPlayback(sourceText)}/> {/*volume icon*/}
                           <FileUpload handleFileUpload={handleFileUpload}/> {/*upload icon*/}
+                          <LinkPaste handleLinkPaste={handleLinkPaste}/> {/*link icon*/}
+                        </span>
+                        <span className='text-sm pr-4'>
+                          {sourceText.length} / 2000
                         </span>
                       </div>
                     </div>
