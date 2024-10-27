@@ -8,15 +8,17 @@ import React, {useState, ChangeEvent} from "react";
 import SpeechRecognitionComponent from "./components/speechrecognition/SpeechRecognition.jsx";
 import { IconFileUpload, IconVolume } from '@tabler/icons-react';
 import useTranslate from "./hooks/useTranslate.jsx";
+import LanguageSelector from "./components/input/LanguageSelector.jsx";
 export default function Home() {
 
   const [sourceText, setSourceText] = useState<string>('');
   const [copied, setCopied] = useState<boolean>(false);
   const [favourites, setFavourites] = useState<boolean>(false);
-  const [languages] = useState<string[]>(["English", "French", "Spanish", "German", "Japenese"]);
+  const [languages] = useState<string[]>(["French", "Spanish", "German", "Japanese"]);
   const [selectedLanguage, setSelectedLanguage] = useState<string>(languages[0]);
 
   const targetText = useTranslate(sourceText, selectedLanguage);
+  
   const handleAudioPlayback = (text:string) => {
     const utterance = new SpeechSynthesisUtterance(text); // converts text to speech
     window.speechSynthesis.speak(utterance); // speaks the text
@@ -28,8 +30,8 @@ export default function Home() {
       const reader = new FileReader();
       reader.onload = () => {
         const rtfContent = reader.result as string;
-        const text = rtfToText(rtfContent); // converts RTF to plain text 
-        setSourceText(reader.result as string);
+        const text = rtfToText(rtfContent);
+        setSourceText(text);
       };
       reader.readAsText(file);
     }
@@ -59,8 +61,8 @@ export default function Home() {
                 </p>
 
                 <div className="mt-7 sm:mt-12 mx-auto max-w-3xl relative">
-                  <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
-                    <div className="w-[350px] resize-y overflow-hidden relative z-10 flex flex-col space-x-3 p-3 border rounded-lg shadow-2xl bg-neutral-900 border-neutral-600/40 shadow-gray-900/100">
+                  <div className="grid w-full gap-4 md:grid-cols-2 grid-cols-1">
+                    <div className="resize-y overflow-hidden relative z-10 flex flex-col space-x-3 p-3 border rounded-lg shadow-2xl bg-neutral-900 border-neutral-600/40 shadow-gray-900/100">
                     {/*gave div above a resize-y option, and added overflow-hidden to hide scroll bar*/}
                       {/*component box holding text element, and icons/buttons */}
                       <TextArea 
@@ -86,11 +88,20 @@ export default function Home() {
 
                     <div className="resize-y overflow-hidden relative z-10 flex flex-col space-x-3 p-3 border rounded-lg shadow-2xl bg-neutral-900 border-neutral-600/40 shadow-gray-900/100">
                       <TextArea id='target-language' value={targetText} onChange={() => {}} placeholder="Target Language" />
+                        <div className='flex flex-row justify-between w-full'>
+                          <span className='cursor-pointer flex space-x-2 flex-row items-center'>
+                            <LanguageSelector
+                              selectedLanguage={selectedLanguage}
+                              setSelectedLanguage={setSelectedLanguage}
+                              languages={languages}
+                            />
+                          </span>
+                        </div>
                         {/*icons and buttons*/}
                       <div className="flex flex-row justify-between w-full">
                         <span className="cursor-pointer flex space-x-2 flex-row">
                           <SpeechRecognitionComponent setSourceText={setSourceText}/> {/*speech recognition component*/}
-                          <IconVolume size={22} className="text-gray-400" onClick={() => handleAudioPlayback(sourceText)}/> {/*volume icon*/}
+                          <IconVolume size={22} className="text-gray-400" onClick={() => handleAudioPlayback(targetText)}/> {/*volume icon*/}
                           <FileUpload handleFileUpload={handleFileUpload}/> {/*upload icon*/}
                           <LinkPaste handleLinkPaste={handleLinkPaste}/> {/*link icon*/}
                         </span>
