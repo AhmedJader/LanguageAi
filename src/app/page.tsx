@@ -54,7 +54,7 @@ export default function Home() {
 
                 <div className="mt-7 sm:mt-12 mx-auto max-w-3xl relative">
                   <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
-                    <div className="resize-y overflow-hidden flex-auto relative z-10 flex flex-col space-x-3 border rounded-lg shadow-2xl bg-neutral-900 border-neutral-600/40 shadow-gray-900/100">
+                    <div className="w-[350px] resize-y overflow-hidden relative z-10 flex flex-col space-x-3 p-3 border rounded-lg shadow-2xl bg-neutral-900 border-neutral-600/40 shadow-gray-900/100">
                     {/*gave div above a resize-y option, and added overflow-hidden to hide scroll bar*/}
                       {/*component box holding text element, and icons/buttons */}
                       <TextArea 
@@ -76,6 +76,10 @@ export default function Home() {
                           {sourceText.length} / 2000
                         </span>
                       </div>
+                    </div>
+
+                    <div className="resize-y overflow-hidden relative z-10 flex flex-col space-x-3 p-3 border rounded-lg shadow-2xl bg-neutral-900 border-neutral-600/40 shadow-gray-900/100">
+                      
                     </div>
                   </div>
                 </div>
