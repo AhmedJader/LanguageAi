@@ -7,10 +7,16 @@ import {rtfToText} from "./utils/rtfToText.js";
 import React, {useState, ChangeEvent} from "react";
 import SpeechRecognitionComponent from "./components/speechrecognition/SpeechRecognition.jsx";
 import { IconFileUpload, IconVolume } from '@tabler/icons-react';
+import useTranslate from "./hooks/useTranslate.jsx";
 export default function Home() {
 
   const [sourceText, setSourceText] = useState<string>('');
+  const [copied, setCopied] = useState<boolean>(false);
+  const [favourites, setFavourites] = useState<boolean>(false);
+  const [languages] = useState<string[]>(["English", "French", "Spanish", "German", "Japenese"]);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(languages[0]);
 
+  const targetText = useTranslate(sourceText, selectedLanguage);
   const handleAudioPlayback = (text:string) => {
     const utterance = new SpeechSynthesisUtterance(text); // converts text to speech
     window.speechSynthesis.speak(utterance); // speaks the text
@@ -79,7 +85,19 @@ export default function Home() {
                     </div>
 
                     <div className="resize-y overflow-hidden relative z-10 flex flex-col space-x-3 p-3 border rounded-lg shadow-2xl bg-neutral-900 border-neutral-600/40 shadow-gray-900/100">
-                      
+                      <TextArea id='target-language' value={targetText} onChange={() => {}} placeholder="Target Language" />
+                        {/*icons and buttons*/}
+                      <div className="flex flex-row justify-between w-full">
+                        <span className="cursor-pointer flex space-x-2 flex-row">
+                          <SpeechRecognitionComponent setSourceText={setSourceText}/> {/*speech recognition component*/}
+                          <IconVolume size={22} className="text-gray-400" onClick={() => handleAudioPlayback(sourceText)}/> {/*volume icon*/}
+                          <FileUpload handleFileUpload={handleFileUpload}/> {/*upload icon*/}
+                          <LinkPaste handleLinkPaste={handleLinkPaste}/> {/*link icon*/}
+                        </span>
+                        <span className='text-sm pr-4'>
+                          {sourceText.length} / 2000
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
