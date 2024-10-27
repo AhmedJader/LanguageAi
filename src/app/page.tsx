@@ -98,7 +98,7 @@ export default function Home() {
                           </span>
                         </div>
                         {/*icons and buttons*/}
-                      <div className="flex flex-row justify-between w-full">
+                      <div className="mt-2 flex flex-row justify-between w-full">
                         <span className="cursor-pointer flex space-x-2 flex-row">
                           <SpeechRecognitionComponent setSourceText={setSourceText}/> {/*speech recognition component*/}
                           <IconVolume size={22} className="text-gray-400" onClick={() => handleAudioPlayback(targetText)}/> {/*volume icon*/}
